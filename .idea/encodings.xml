@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/spring-highcharts" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springboot-anntion-consumer" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springboot-anntion-provider" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springboot-consumer" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springboot-mongodbandredis" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springboot-opi" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springboot-provider" charset="UTF-8" />
+  </component>
+</project>

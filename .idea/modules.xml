@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/dubbo-api2/dubbo-api2.iml" filepath="$PROJECT_DIR$/dubbo-api2/dubbo-api2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-highcharts/spring-highcharts.iml" filepath="$PROJECT_DIR$/spring-highcharts/spring-highcharts.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-anntion-consumer/springboot-anntion-consumer.iml" filepath="$PROJECT_DIR$/springboot-anntion-consumer/springboot-anntion-consumer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-anntion-provider/springboot-anntion-provider.iml" filepath="$PROJECT_DIR$/springboot-anntion-provider/springboot-anntion-provider.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-consumer/springboot-consumer.iml" filepath="$PROJECT_DIR$/springboot-consumer/springboot-consumer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-mongodbandredis/springboot-mongodbandredis.iml" filepath="$PROJECT_DIR$/springboot-mongodbandredis/springboot-mongodbandredis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-opi/springboot-opi.iml" filepath="$PROJECT_DIR$/springboot-opi/springboot-opi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-provider/springboot-provider.iml" filepath="$PROJECT_DIR$/springboot-provider/springboot-provider.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/work.iml" filepath="$PROJECT_DIR$/.idea/work.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../easyui1.5/themes/icon.css">
+    <link rel="stylesheet" href="../easyui1.5/themes/default/easyui.css">
+    <script src="../easyui1.5/jquery.min.js"></script>
+    <script src="../easyui1.5/jquery.easyui.min.js"></script>
+    <script src="../easyui1.5/locale/easyui-lang-zh_CN.js"></script>
+</head>
+<body>
+<div id="toolbar">
+    <input type="button" value="导出Excel" onclick="exportExcel()">
+    <form action="../book/importExcel" method="post" enctype="multipart/form-data" >
+        <input type="file" name="file"/>
+        <input type="submit" value="导入excel"/>
+    </form>
+
+
+
+</div>
+<table id="AllTable"></table>
+
+</body>
+
+
+<script>
+$(function(){
+chaxun();
+})
+function chaxun(){
+
+    $("#AllTable").datagrid({
+        url:'../book/queryBookList',
+        //条查
+        toolbar:'#toolbar',
+        //自适应父容器大小
+        fit:true,
+        //自定义展示几条
+        pageSize:6,
+        pagination:true,
+        loadMsg:"正在加载中",
+        //singleSelect:true, 只允许选择一行
+        //自定义下拉选择几条
+        pageList:[
+
+            2,4,6,8,10,15,20,30
+
+        ],
+        columns:[
+
+            [
+
+                {field:'check',checkbox:true},
+                {field:'id',title:'书籍编号',width:'160px'},
+                {field:'name',title:'书籍名称',width:'130px'},
+                {field:'bookTime',title:'出版时间',width:'160px'},
+                {field:'bookStatus',title:'书籍状态',width:'150px',formatter:function(value,index,row){
+                    var status = "";
+                    if(value == 1){
+                        status += "上架";
+                    }
+                        if(value == 2){
+                            status += "下架";
+                        }
+                   return status;
+                    }},
+                {field:'bookDetail',title:'书籍简介',width:'160px'},
+                {field:'bookType',title:'书籍类型',width:'130px',formatter:function(value,index,row){
+                    var type = "";
+                    if(value == 11){
+                        type += "类型1";
+                    }
+                        if(value == 22){
+                            type += "类型2";
+                        }
+                        if(value == 33){
+                            type += "类型3";
+                        }
+                   return type;
+                    }}
+
+        ]
+
+        ]
+    })
+
+}
+//导出Excel
+function exportExcel() {
+    location.href="../book/exportExcel";
+}
+
+</script>
+</html>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jk.dao.BookMapper" >
+    <!-- 分页查询总条数 -->
+        <select id="findBookCount" resultType="int">
+          select count(1) from t_book
+        </select>
+    <!-- 普通查询 -->
+    <select id="findBookList" resultType="com.jk.model.Book">
+       SELECT
+            *
+        FROM
+            t_book
+        limit #{startIndex},#{endIndex}
+     </select>
+    <!--新增-->
+    <insert id="addBookList" parameterType="com.jk.model.Book">
+      insert into t_book(name,bookTime,bookStatus,bookDetail,bookType) values(#{name},#{bookTime},#{bookStatus},#{bookDetail},#{bookType})
+    </insert>
+    <!--修改-->
+    <update id="updateBookList" parameterType="com.jk.model.Book">
+      update t_book tb set tb.name=#{name},tb.bookTime=#{bookTime},tb.bookStatus=#{bookStatus},tb.bookDetail=#{bookDetail},tb.bookType=#{bookType} where tb.id=#{id}
+    </update>
+    <!--删除-->
+    <delete id="delBook" parameterType="int">
+        delete from t_book where id in
+        <foreach collection="array" index="index" item="item" open="("
+                 close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+    <!--回显-->
+    <select id="queryFindBookById" resultType="com.jk.model.Book" parameterType="int">
+        select * from t_book tb where tb.id = #{value}
+    </select>
+</mapper>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jk.mapper.BookMapper" >
+   <select id="queryBook" resultType="java.util.Map">
+      select count(*) 总个数,DATE_FORMAT(booktime,'%Y') 年份 from t_book GROUP BY booktime
+      <!-- select count(*) 总个数,DATE_FORMAT(bookdate,'%Y') 日期 from t_book GROUP BY DATE_FORMAT(bookdate,'%Y')-->
+   </select>
+   <select id="queryBookBing" resultType="java.util.Map">
+      select count(*) 数量,DATE_FORMAT(booktime,'%Y') 年份 from t_book GROUP BY DATE_FORMAT(booktime,'%Y')
+   </select>
+   <select id="queryBookShuzhuang" resultType="java.util.Map">
+      select count(*) 数量,DATE_FORMAT(booktime,'%Y') 月份 from t_book GROUP BY DATE_FORMAT(booktime,'%Y')
+   </select>
+   <select id="queryZhuxing" resultType="java.util.Map">
+          select count(*) 个数, DATE_FORMAT(booktime,'%w') 时间 from t_book GROUP BY DATE_FORMAT(booktime,'%w')
+   </select>
+
+
+</mapper>

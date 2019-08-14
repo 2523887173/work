@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jk.mapper.JuriMapper" >
+    <!-- 分页查询总条数 -->
+    <select id="findUserCount" resultType="int">
+        select count(1) from t_user
+    </select>
+
+    <!-- 普通查询 -->
+    <select id="findUserList" resultType="com.jk.model.User">
+        SELECT
+            *
+        FROM
+        t_user
+    limit #{startIndex},#{endIndex}
+    </select>
+    <insert id="insert2" parameterType="com.jk.model.UserRole" >
+    insert into user_role (id, userId, roleId) values (#{id}, #{userId}, #{roleId})
+
+
+
+  </insert>
+
+
+</mapper>

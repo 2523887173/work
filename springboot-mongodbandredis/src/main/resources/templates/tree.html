@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="../easyui1.5/jquery.easyui.min.js"> </script>
+    <script type="text/javascript" src="../easyui1.5/locale/easyui-lang-zh_CN.js"> </script>
+
+    <link rel="stylesheet" href="../easyui1.5/themes/default/easyui.css"></link>
+    <link rel="stylesheet" href="../easyui1.5/themes/icon.css"></link>
+
+    <script src="../ztree/jquery.ztree.all-3.5.js"></script>
+    <link rel="stylesheet" href="../ztree/zTreeStyle.css" />
+    <script type="text/javascript" src="http://open.iciba.com/ds_open.php?id=66079&name=http%3A%2F%2Fopen.iciba.com&auth=DC8A70C17E3CE684C6FB17E438B3DC85" charset="utf-8"></script>
+</head>
+
+<!-- layout布局开始 -->
+<body class="easyui-layout">
+
+<div data-options="region:'north',title:'North Title',split:true" style="height:100px;">
+    <center>
+        <font size="6px" color="red">欢迎进入-管理系统</font>
+    </center>
+</div>
+<div data-options="region:'west',title:'West',split:true" style="width:200px;">
+
+
+    <!-- 手风琴开始 -->
+    <div id="aa" class="easyui-accordion"  fit=true >
+
+        <div title="管理列表（动态树-同步）"style="overflow:auto;">
+
+            <ul id="tongtree"></ul>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div data-options="region:'center',title:'center title'" style="padding:5px;background:#eee;">
+
+    <!--选项卡开始  -->
+    <div id="tabsId" class="easyui-tabs" fit=true>
+
+    </div>
+
+    <!--选项卡结束  -->
+
+</div>
+</body>
+
+<script>
+    $(function(){
+
+        addTabls();
+        gettongtree();
+
+    });
+    //同步树
+    function gettongtree(){
+
+        $('#tongtree').tree({
+            url:'../tree/getTreeAll'
+        });
+
+    }
+
+    function  addTabls(){
+
+        $('#tongtree').tree({
+            onClick: function(node){
+                console.log(node);
+                //先获取选项卡,然后判断是否存在该选项卡
+                var tag = $("#tabsId").tabs('exists',node.text);
+
+                if(tag){
+                    //如果存在当前选项卡，就让他显示这个选项卡
+                    $('#tabsId').tabs('select',node
+                        .text);
+
+                }else{
+                    // 判断是不是父节点 如果是 是父节点 就  不让 打开  tabls
+                    if( (node.children=="" ||  node.children==null) && node.state != 'closed' && node.pid !=0){
+
+                        if(node.url == null ){
+
+                            // 如果没有就新建
+                            $('#tabsId').tabs('add',{
+                                title:node.text,
+                                closable:true,
+                                content:createJsp("/404.jsp")
+                            });
+                        }else{
+                            // 如果没有就新建
+                            $('#tabsId').tabs('add',{
+                                title:node.text,
+                                closable:true,
+                                content:createJsp(node.url)
+                            });
+                        }
+
+                    }
+                }
+
+            }
+        });
+    }
+
+    //去加载一个界面
+    function createJsp(url){
+
+        return '<iframe scrolling="auto" frameborder="0"  src="../'+ url + '" style="width:100%;height:100%;"></iframe>';
+    }
+
+
+
+</script>
+</html>

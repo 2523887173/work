@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="../easyui1.5/jquery.easyui.min.js"> </script>
+    <script type="text/javascript" src="../easyui1.5/locale/easyui-lang-zh_CN.js"> </script>
+
+    <link rel="stylesheet" href="../easyui1.5/themes/default/easyui.css"></link>
+    <link rel="stylesheet" href="../easyui1.5/themes/icon.css"></link>
+
+    <script src="../ztree/jquery.ztree.all-3.5.js"></script>
+    <link rel="stylesheet" href="../ztree/zTreeStyle.css" />
+</head>
+<body>
+<table id="data" title="信息" class="easyui-datagrid" toolbar="#ToolBar" fit='true' ></table>
+<!-- dialog 对话框 -->
+<div id="updl" class="easyui-dialog" title="用户角色" style="width:800px;height:400px;"  data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true">
+    <!-- 下拉树  -->
+    <ul id="et" class="easyui-tree">
+    </ul>
+    <input type="button" value="提交" onclick="updateUserRole()" >
+</div>
+
+<div id="ToolBar">
+    <input type="button" value="导出Excel" onclick="exportExcel()">
+    <form action="../opi/importExcel" method="post" enctype="multipart/form-data" >
+        <input type="file" name="file"/>
+        <input type="submit" value="导入excel"/>
+    </form>
+
+</div>
+</body>
+
+
+<script>
+$(function(){
+    chaxun();
+})
+function chaxun(){
+    $("body").css({visibility:"visible"});
+    $("#data").datagrid({
+        url:"../juri/queryPageUserList",
+        columns:[
+            [
+            {field:'cb',checkbox:true},
+            {field:'id',title:'Id',width:100},
+            {field:'username',title:'用户名称',width:100},
+            {field:'password',title:'用户密码',width:100},
+            {field:'cz',title:'操作',
+                formatter: function(value,row,index){
+                    return "<a href='javascript:bindRole("+row.id+")' class='easyui-linkbutton' iconCls:'icon-cancel'>绑定角色</a>";
+                },width:$(this).width() * 0.2
+            }
+
+        ]
+        ],
+
+        pagination:true,
+        pageList:[2,5,10],
+        rownumbers:true,
+        toolbar:"#ToolBar",
+        fit:true,
+        fitColumns:true
+    })
+}
+
+var uidTwo;
+/*  查询 用户对应的 角色 */
+function bindRole(uid){
+    uidTwo = uid;
+    //开启    dialog
+    $("#updl").dialog("open");
+    //加载  所有的  菜单  并且 默认选中  用户 原来 对应的 角色
+    $('#et').tree({
+        url: '../juri/getRoleByUserId?userId='+uid,
+        checkbox: true,
+        // 去掉 父子节点 级联
+        cascadeCheck:false,
+    });
+}
+/**
+ * 编辑  用户角色
+ */
+function  updateUserRole(){
+    var roleIds = getChecked();
+    $.ajax({
+        url:"../juri/updateUserRole",
+        data:{roleIds:roleIds,uidTwo:uidTwo},
+        type:"post",
+        success:function(data){
+            //代表 成功
+            if(data=='1'){
+                $("#updl").dialog("close");
+            }else{
+                alert("失败");
+            }
+
+        }
+
+    })
+}
+
+function getChecked(){
+    var nodes = $('#et').tree('getChecked');
+    var s = '';
+    for(var i=0; i<nodes.length; i++){
+        if (s != '') s += ',';
+        s += nodes[i].id;
+    }
+    return s;
+}
+//导出Excel
+function exportExcel() {
+    location.href="../opi/exportExcel";
+}
+</script>
+</html>

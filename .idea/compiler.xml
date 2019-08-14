@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="springboot-anntion-consumer" />
+        <module name="springboot-provider" />
+        <module name="springboot-opi" />
+        <module name="springboot-anntion-provider" />
+        <module name="dubbo-api2" />
+        <module name="springboot-consumer" />
+        <module name="springboot-mongodbandredis" />
+        <module name="spring-highcharts" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="dubbo-api" target="1.7" />
+      <module name="dubbo-api2" target="1.5" />
+      <module name="spring-demo" target="1.8" />
+      <module name="spring-highcharts" target="1.8" />
+      <module name="spring_demo" target="1.8" />
+      <module name="spring_provider" target="1.8" />
+      <module name="springboot-anntion-consumer" target="1.8" />
+      <module name="springboot-anntion-provider" target="1.8" />
+      <module name="springboot-consumer" target="1.8" />
+      <module name="springboot-mongodbandredis" target="1.8" />
+      <module name="springboot-opi" target="1.8" />
+      <module name="springboot-provider" target="1.8" />
+      <module name="springboot_demo" target="1.8" />
+      <module name="springboot_provider" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="spring-demo" options="-parameters" />
+      <module name="spring-highcharts" options="-parameters" />
+      <module name="spring_demo" options="-parameters" />
+      <module name="spring_provider" options="-parameters" />
+      <module name="springboot-anntion-consumer" options="-parameters" />
+      <module name="springboot-anntion-provider" options="-parameters" />
+      <module name="springboot-consumer" options="-parameters" />
+      <module name="springboot-mongodbandredis" options="-parameters" />
+      <module name="springboot-opi" options="-parameters" />
+      <module name="springboot-provider" options="-parameters" />
+      <module name="springboot_demo" options="-parameters" />
+      <module name="springboot_provider" options="-parameters" />
+    </option>
+  </component>
+</project>

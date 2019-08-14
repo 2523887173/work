@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="../easyui1.5/jquery.easyui.min.js"> </script>
+    <script type="text/javascript" src="../easyui1.5/locale/easyui-lang-zh_CN.js"> </script>
+
+    <link rel="stylesheet" href="../easyui1.5/themes/default/easyui.css"></link>
+    <link rel="stylesheet" href="../easyui1.5/themes/icon.css"></link>
+
+    <script src="../ztree/jquery.ztree.all-3.5.js"></script>
+    <link rel="stylesheet" href="../ztree/zTreeStyle.css" />
+
+</head>
+<body>
+<div id="toolbar">
+    <a id="addbutton" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">新增角色</a>
+
+</div>
+<table id="data" title="信息" class="easyui-datagrid" fit='true' >
+
+</table>
+
+
+<!-- dialog 对话框 -->
+<div id="updl"  class="easyui-dialog" title="菜单" style="width:400px;height:300px;"
+     data-options="iconCls:'icon-save',resizable:true,modal:true">
+    <!-- 下拉树  -->
+    <ul id="et" class="easyui-tree">
+    </ul>
+    <input type="button" value="提交" onclick="updateTree()" >
+</div>
+<!-- 弹框 -->
+<div id="MusicDialog" class="easyui-dialog" data-options="title:'角色',closed:true,modal:true,iconCls:'icon-add',buttons:[{
+			 text:'保存',
+			 plain:true,
+			 iconCls:'icon-save',
+			 handler:function(){
+			 saveMusic();
+			 }
+     }
+ ]" style="width:300px;height:150px">
+    <form id="MusicForm" method="post">
+        <center>
+            <table border="1">
+                <tr>
+                    <td>角色名称</td>
+                    <td>
+                        <input type="text" class="easyui-textbox" name="name">
+                        <input type="text" name="id" style="display:none">
+                    </td>
+                </tr>
+                <tr>
+                    <td>角色简介</td>
+                    <td><input type="text" class="easyui-textbox" name="description"></td>
+                </tr>
+            </table>
+        </center>
+    </form>
+</div>
+</body>
+<script>
+
+    $(function(){
+        $("#updl").dialog("close");
+        chaxun();
+    });
+
+
+    function chaxun(){
+        $("body").css({visibility:"visible"});
+        $("#data").datagrid({
+
+            url:"../menu/queryRoleList",
+            columns:[
+
+                [
+                {field:'cb',checkbox:true},
+                {field:'id',title:'Id',width:100},
+                {field:'name',title:'名称',width:100},
+                {field:'description',title:'简介',width:100},
+                {field:'cz',title:'操作',
+                    formatter: function(value,row,index){
+
+                        var content = "<a href='javascript:deljuese("+row.id+")' class='easyui-linkbutton' iconCls:'icon-cancel'>删除</a>";
+                        content += "|   <a href='javascript:editRolePermiss("+row.id+")' class='easyui-linkbutton' iconCls:'icon-cancel'>绑定权限</a>"
+                        return content;
+                    },width:$(this).width() * 0.2
+                }
+            ]
+
+            ],
+            pagination:true,
+            pageList:[2,5,10],
+            rownumbers:true,
+            toolbar:'#toolbar',
+            fit:true,
+            fitColumns:true
+
+
+        })
+    }
+    var roles ;
+    function editRolePermiss(id){
+        roles = id;
+        $("#updl").dialog("open");
+
+        $('#et').tree({
+            url: '../menu/getTreeId?id='+id,
+            checkbox: true,
+            // 去掉 父子节点 级联
+            cascadeCheck:false,
+        });
+
+    }
+
+
+    function updateTree(){
+        var ids = getChecked();
+        var id = roles;
+        $.ajax({
+            url:"../menu/updateTree",
+            data:{ids:ids,id:id},
+            type:"post",
+            success:function(data){
+                if(data=='1'){
+                    $("#updl").dialog("close");
+                }else{
+                    alert("不对")
+                }
+            }
+        })
+
+    }
+
+    function getChecked(){
+        var nodes = $('#et').tree('getChecked');
+        var s = '';
+        for(var i=0; i<nodes.length; i++){
+            if (s != '') s += ',';
+            s += nodes[i].id;
+        }
+        return s;
+
+    }
+
+    /* 角色单删 */
+    function deljuese(id){
+        $.messager.confirm('确认','您确定要删除吗?',function(r){
+            if(r){
+                $.ajax({
+                    url:'',
+                    type:'post',
+                    data:{
+                        ids:id
+                    },
+                    dataType:'json',
+                    success:function(data){
+                        if(data){
+                            chaxun();
+                        }else{
+                            $.messager.alert('提示','删除失败','error');
+                        }
+                    }
+                })
+            }
+        });
+    }
+    //新增打开弹框:通过ID选择器找到弹框的ID然后打开
+    $("#addbutton").click(function(){
+        $("#MusicDialog").dialog({
+            title:'新增角色',
+            closed:false
+        })
+    })
+    /* 新增保存 */
+    function saveMusic(){
+        $("#MusicForm").form('submit',{
+            url:'',
+            onSubmit:function(){
+                return true;
+            },
+            success:function(data){
+                if(data){
+                    $("#MusicDialog").dialog('close')
+                    chaxun();
+                }else{
+                    $.messager.alert('提示','保存失败','error')
+                }
+            }
+        })
+    }
+
+
+</script>
+</html>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jk.mapper.MenuMapper" >
+    <!--查询角色-->
+    <select id="queryRoleList" resultType="com.jk.model.Role">
+        select * from t_role
+    </select>
+    <select id="getTreeId" parameterType="java.lang.Integer" resultType="java.lang.String">
+     select treeid from role_tree where roleid = #{id}
+    </select>
+
+    <select id="getTreeAll" resultType="com.jk.model.Tree">
+     select * from t_tree
+    </select>
+
+    <delete id="deleteRoleTree" parameterType="java.lang.Integer">
+ 		 delete from role_tree where roleid = #{id}
+    </delete>
+
+    <insert id="insert" parameterType="com.jk.model.RoleTree" >
+   	insert into role_tree (id, treeid, roleid)
+    values (#{id,jdbcType=INTEGER}, #{treeid,jdbcType=INTEGER}, #{roleid,jdbcType=INTEGER})
+    </insert>
+</mapper>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jk.mapper.OpiMapper" >
+    <select id="queryUserOpi" resultType="com.jk.model.User">
+    select * from t_user
+</select>
+    <insert id="addUserOpi" parameterType="java.util.List">
+        INSERT INTO t_user (username,password) VALUES
+        <foreach collection="list" item="l" separator=","  >   ( #{l.username},#{l.password})
+
+        </foreach>
+    </insert>
+</mapper>

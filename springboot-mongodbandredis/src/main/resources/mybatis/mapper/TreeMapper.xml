@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jk.mapper.TreeMapper" >
+<!-- 查询缓存树 -->
+<select id="getTreeAll" resultType="com.jk.model.Tree" parameterType="int">
+  SELECT
+        tt.*
+    FROM
+            t_user tu,
+            user_role ur,
+            t_role tr,
+            role_tree rt,
+            t_tree tt
+    WHERE
+        tu.id = ur.userId
+    AND ur.roleId = tr.id
+    AND tr.id = rt.roleid
+    AND rt.treeid = tt.id
+    AND tu.id = #{id}
+</select>
+</mapper>

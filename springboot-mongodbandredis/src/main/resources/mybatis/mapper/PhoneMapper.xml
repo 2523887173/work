@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jk.mapper.PhoneMapper" >
+    <!-- 分页查询总条数 -->
+    <select id="findPhoneCount" resultType="int">
+       select count(1) from t_phone
+    </select>
+
+    <!-- 普通查询 -->
+    <select id="findPhoneList" resultType="com.jk.model.PhoneBean">
+        SELECT
+            *
+        FROM
+            t_phone
+            limit #{startIndex},#{endIndex}
+    </select>
+</mapper>
